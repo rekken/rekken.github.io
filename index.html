@@ -5,17 +5,17 @@
   
 
   
-  <title>Security Research Blog of Rekken</title>
+  <title>The Road to 0x41414141</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Security Research Blog of Rekken">
+<meta property="og:title" content="The Road to 0x41414141">
 <meta property="og:url" content="https://rekken.github.io/index.html">
-<meta property="og:site_name" content="Security Research Blog of Rekken">
+<meta property="og:site_name" content="The Road to 0x41414141">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Security Research Blog of Rekken">
+<meta name="twitter:title" content="The Road to 0x41414141">
   
-    <link rel="alternate" href="/atom.xml" title="Security Research Blog of Rekken" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="The Road to 0x41414141" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -34,7 +34,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Security Research Blog of Rekken</a>
+        <a href="/" id="logo">The Road to 0x41414141</a>
       </h1>
       
     </div>
@@ -45,6 +45,8 @@
           <a class="main-nav-link" href="/">Home</a>
         
           <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
         
       </nav>
       <nav id="sub-nav">
@@ -62,10 +64,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Windows-Logical-EoP-Workshop-Writeup" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/10/23/hello-hexo/" class="article-date">
-  <time datetime="2018-10-23T05:29:29.000Z" itemprop="datePublished">2018-10-23</time>
+    <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" class="article-date">
+  <time datetime="2017-05-30T07:57:17.000Z" itemprop="datePublished">2017-05-30</time>
 </a>
     
   </div>
@@ -76,7 +78,58 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/23/hello-hexo/">Hello Hexo</a>
+      <a class="article-title" href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/">Windows Logical EoP Workshop Writeup</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这份文档是对 James Forshaw 2017 年公开的 《Windows Logical EoP Workshop》 逻辑漏洞本地提权 Workshop 的分析调试笔记。</p>
+<ul>
+<li><p>Workshop PPT: <a href="https://conference.hitb.org/hitbsecconf2017ams/materials/D2T3%20-%20James%20Forshaw%20-%20Introduction%20to%20Logical%20Privilege%20Escalation%20on%20Windows.pdf" target="_blank" rel="noopener">https://conference.hitb.org/hitbsecconf2017ams/materials/D2T3%20-%20James%20Forshaw%20-%20Introduction%20to%20Logical%20Privilege%20Escalation%20on%20Windows.pdf</a></p>
+</li>
+<li><p>Workshop 源码： <a href="https://github.com/tyranid/windows-logical-eop-workshop" target="_blank" rel="noopener">https://github.com/tyranid/windows-logical-eop-workshop</a></p>
+</li>
+</ul>
+<h2 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1 环境搭建"></a>1 环境搭建</h2><h3 id="1-1-虚拟机快照一次"><a href="#1-1-虚拟机快照一次" class="headerlink" title="1.1 虚拟机快照一次"></a>1.1 虚拟机快照一次</h3><p>如果方便，建议生成一次系统快照，方便实验结束之后恢复系统环境</p>
+<h3 id="1-2-关闭驱动签名验证，以便测试自己编写的驱动"><a href="#1-2-关闭驱动签名验证，以便测试自己编写的驱动" class="headerlink" title="1.2 关闭驱动签名验证，以便测试自己编写的驱动"></a>1.2 关闭驱动签名验证，以便测试自己编写的驱动</h3><p>只有关闭了这个签名验证的保护，Windows 系统才允许加载用户自己编写的驱动。另外，这个特性是针对 64 位 Windows 8/10 的，如果用的是 32 位系统，可以忽略。</p>
+<p>管理员权限运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt;Bcdedit.exe -set TESTSIGNING ON</span><br><span class="line">操作成功完成。</span><br><span class="line"></span><br><span class="line">C:\Windows\system32&gt;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="cjyv9dun700039orj7en7ea66" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/01/hello-hexo/" class="article-date">
+  <time datetime="2017-01-01T05:29:29.000Z" itemprop="datePublished">2017-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/01/hello-hexo/">Hello Hexo</a>
     </h1>
   
 
@@ -89,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2018/10/23/hello-hexo/" data-id="cjyuxujlx00017erjl6obe67z" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="cjyv9dumc00019orjqy315h3q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -117,7 +170,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
   </div>
 
@@ -130,7 +183,11 @@
       <ul>
         
           <li>
-            <a href="/2018/10/23/hello-hexo/">Hello Hexo</a>
+            <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/">Windows Logical EoP Workshop Writeup</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/01/hello-hexo/">Hello Hexo</a>
           </li>
         
       </ul>
@@ -156,6 +213,8 @@
     <a href="/" class="mobile-nav-link">Home</a>
   
     <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
   
 </nav>
     
