@@ -100,7 +100,63 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="cjz1ugcsx000313rj9dyhlonv" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="cjz39e1gy0004vyrj2k4uzwna" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" class="article-date">
+  <time datetime="2017-07-23T06:11:35.000Z" itemprop="datePublished">2017-07-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/">GeekPwn 2016 Windows 服务提权漏洞的分析和利用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>GeekPwn 2016 比赛中有一道 Windows 服务漏洞提权题目，该服务程序会创建命名管道（Named Pipe）服务端接收客户端发送的文件路径然后调用 LoadLibrary 加载，但加载之前有一系列的检查过程，我们的最终目标是绕过这些检查，加载我们指定的 DLL并以 SYSTEM 权限执行任意代码。本文笔者逐一分析该服务的各个验证环节及其绕过方法，以及如何组合他们最终启动 SYSTEM 权限的计算器。</p>
+<p>服务端的处理逻辑: </p>
+<ol>
+<li><p>服务端创建命名管道，等待客户端的连接。</p>
+</li>
+<li><p>客户端连接之后，服务端OpenProcess 打开客户端进程句柄，获得客户端进程 Image 文件路径。</p>
+</li>
+<li><p>验证客户端 Image 文件路径的签名。</p>
+</li>
+<li><p>签名验证通过之后，创建 Event 事件对象，无限等待 Event 对象直到 Signaled 状态。</p>
+</li>
+<li><p>通过管道接受客户端发送的 DLL 文件路径。</p>
+</li>
+<li><p>验证 DLL 文件路径的签名，签名通过之后调用 LoadLibrary 加载 DLL。</p>
+</li>
+</ol>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="cjz39e1fx0001vyrj8fhq5hhw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -151,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="cjz1ugct0000413rjhjb8tnhk" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="cjz39e1jm0005vyrjzwx8z6q2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -188,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="cjz1ugcs6000113rjmptcde36" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="cjz39e1g10002vyrj0oi9bva2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -216,7 +272,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
   </div>
 
@@ -230,6 +286,10 @@
         
           <li>
             <a href="/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/">Microsoft Edge Chakra OP_NewScObjArray 类型混淆漏洞分析笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/">GeekPwn 2016 Windows 服务提权漏洞的分析和利用</a>
           </li>
         
           <li>
