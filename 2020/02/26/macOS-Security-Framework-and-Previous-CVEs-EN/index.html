@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-145401438-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>macOS Security Framework and previous CVEs | The Road to 0x41414141</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SummaryCOVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking. In this blog, I will try to analyze Security framework, especia">
+<meta name="keywords" content="macOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macOS Security Framework and previous CVEs">
+<meta property="og:url" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/index.html">
+<meta property="og:site_name" content="The Road to 0x41414141">
+<meta property="og:description" content="SummaryCOVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking. In this blog, I will try to analyze Security framework, especia">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/security-framework.png">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/csda-of-macos.png">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/keychain.png">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/keychain-item-to-db.png">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/secitemadd_to_xpc.png">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/keychain_api_and_secd.jpg">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/auth_security_agent.png">
+<meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/securityd_securityagent.jpg">
+<meta property="og:updated_time" content="2020-02-29T09:10:36.450Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="macOS Security Framework and previous CVEs">
+<meta name="twitter:description" content="SummaryCOVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking. In this blog, I will try to analyze Security framework, especia">
+<meta name="twitter:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/security-framework.png">
+<meta name="twitter:creator" content="@yuebinsun">
+  
+    <link rel="alternate" href="/atom.xml" title="The Road to 0x41414141" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">The Road to 0x41414141</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://rekken.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-macOS-Security-Framework-and-Previous-CVEs-EN" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" class="article-date">
+  <time datetime="2020-02-26T09:20:00.000Z" itemprop="datePublished">2020-02-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      macOS Security Framework and previous CVEs
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>COVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking.</p>
+<p>In this blog, I will try to analyze Security framework, especially Keychain, and previous vulnerabilities of the Secuirty framework。</p>
+<h2 id="Security-Framework"><a href="#Security-Framework" class="headerlink" title="Security Framework"></a>Security Framework</h2><p>Security framework is responsible for providing authentication and authorization, secure data storage and transportation, code signing, encryption/decryption services. Apps can use this services by using API of Security framework directly without knowing or caring about its implementation details.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/security-framework.png" title="Image">
+
+<p>But what are the components which composes the Security framework, and how the components collaborate with each other?</p>
+<a id="more"></a>
+
+
+<p>Unfortunately the official document site did not updating the architecture diagram of this framework from macOS 10.7, but I find a outdated diagram in the book <a href="https://osxbook.com/" target="_blank" rel="noopener">《Mac OS X Internals》</a>, It can still be used as a reference, Not too much has changed from that time.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/csda-of-macos.png" title="Image">
+
+
+<h2 id="Keychain"><a href="#Keychain" class="headerlink" title="Keychain"></a>Keychain</h2><p>Keychain play a significant role in the Security framework, passwords of WiFi and passwords of Safari autofilling are all saved and managed by Keychain.</p>
+<p>Keychain was first introduced in Mac OS X 8.6, and was used for storing login credentials of the mail servers for PowerTalk mail system. Today, it improve a lot, many new data types are supported including many kinds of passwords, encryption keys, certificates and private notes. PowerTalk is no longer exists, but Keychain’s clients is replaced by many builtin Apps and thirdparty Apps.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/keychain.png" title="Image">
+
+<p>Keychains in iOS and macOS are slightly different.</p>
+<p>In iOS, there is only a single Keychain, it can be accessed when the device is unlocked, otherwise it will be locked too.</p>
+<p>In macOS, users are allowed to create any number of Keychains for private use, Security framework provide SecKeychain{Create, Delete, Open, …} APIs for macOS users, with this API users can create, delete, open Keychain.</p>
+<p>By default, two Keychains are already exist in macOS:</p>
+<ul>
+<li>~/Library/Keychains/login.keychain-db</li>
+<li>/Library/Keychains/System.keychain</li>
+</ul>
+<p>The login Keychain will be unlocked when user login macOS. System keychain, in contrast, is locked and encrypted, its decryption key is stored in /var/db/SystemKey, only root process can access it.</p>
+<p>Apple offers Keychain Access.app to common users to view/search/create Keychains and Keychain Items, obtaining sensitive data, such as passwords, will trigger a authentication dialog.</p>
+<h3 id="How-Keychain-stores-a-new-password"><a href="#How-Keychain-stores-a-new-password" class="headerlink" title="How Keychain stores a new password"></a>How Keychain stores a new password</h3><p>Example code of Apple Documentation as below shows how to store a new website password to Keychain.</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> let server = <span class="string">"www.example.com"</span></span><br><span class="line">let account = credentials.username</span><br><span class="line">let password = credentials.password.data(using: String.Encoding.utf8)!</span><br><span class="line">var query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,</span><br><span class="line">                            kSecAttrAccount as String: account,</span><br><span class="line">                            kSecAttrServer as String: server,</span><br><span class="line">                            kSecValueData as String: password]</span><br><span class="line">let status = SecItemAdd(query as <span class="built_in">CFDictionary</span>, <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The most important is SecItemAdd API, we will analyze this API step by step to see how it implements.</p>
+<p>In the abstract, data stored in query param will deliver to Keychain Service over SecItemAdd API, service will package the data as an Keychain Item, password in query will be encrypted, and the Keychain Item will continue to be written to Keychain database at disk.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/keychain-item-to-db.png" title="Image">
+
+<p>From a components perspective, SecItemAdd API is implemented by Security shared library(/System/Library/Frameworks/Security.framework/Versions/A/Security), Security shared library will be loaded into the current App process. After SecItemAdd of Security shared library are called, the query data will be forwarded to XPC Service(com.apple.securityd.xpc) over SECURITYD_XPC macro, this XPC service are hosted by secd process(/usr/libexec/secd), secd run as current user.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/secitemadd_to_xpc.png" title="Image">
+
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/keychain_api_and_secd.jpg" title="Image">
+
+<p>When data is send to secd process, according to operation, securityd_xpc_dictionary_handler(simplified for better reading) dispatch message to different internal functions. In our case, query param is passed on to _SecItemAdd directly, and there is also another important param, client of SecurityClient struct, SecurityClient is responsible for identifying client process, subsequently ACL checking is based on this struct. In addition, accessGroups field of SecurityClient is used for implementing the Shared Web Credentials(share credentials between iOS apps and their website counterparts). Apps and Web use Associated Domains Entitlement to create association, more details can read <a href="https://developer.apple.com/documentation/safariservices/supporting_associated_domains_in_your_app?language=objc" target="_blank" rel="noopener">Supporting Associated Domains in Your App</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">securityd_xpc_dictionary_handler</span><span class="params">(<span class="keyword">const</span> <span class="keyword">xpc_connection_t</span> connection, <span class="keyword">xpc_object_t</span> event)</span> </span>&#123;</span><br><span class="line">    SecurityClient client = &#123;</span><br><span class="line">        .task = <span class="literal">NULL</span>,</span><br><span class="line">        .accessGroups = <span class="literal">NULL</span>,</span><br><span class="line">        .musr = <span class="literal">NULL</span>,</span><br><span class="line">        .uid = xpc_connection_get_euid(connection),</span><br><span class="line">        .allowSystemKeychain = <span class="literal">false</span>,</span><br><span class="line">        .allowSyncBubbleKeychain = <span class="literal">false</span>,</span><br><span class="line">        .isNetworkExtension = <span class="literal">false</span>,</span><br><span class="line">        .canAccessNetworkExtensionAccessGroups = <span class="literal">false</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">    fill_security_client(&amp;client, xpc_connection_get_euid(connection), auditToken));</span><br><span class="line">    <span class="keyword">switch</span> (operation)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> sec_item_add_id:</span><br><span class="line">        &#123;</span><br><span class="line">            _SecItemAdd(query, &amp;client, &amp;result, &amp;error) &amp;&amp; result);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>In _SecItemAdd, query data will be translated to Sqlite3 sql statement, and in the end data will be inserted into sqlite3 database. What needs to be pointed out is that password will be encryptd before insert into database, and other non-secret fields will keep plain, this plain fields provide Keychain item searching support.</p>
+<p>So far, inserting new website password to Keychain based on SecItemAdd API finished. The newly inserted Keychain item is save to Login Keychain, Login Keychain will be locked when user logout or machine poweroff.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> CFStringRef <span class="title">SecDbItemCopyInsertSQL</span><span class="params">(SecDbItemRef item, <span class="keyword">bool</span>(^use_attr)(<span class="keyword">const</span> SecDbAttr *attr))</span> </span>&#123;</span><br><span class="line">    CFMutableStringRef sql = CFStringCreateMutable(CFGetAllocator(item), <span class="number">0</span>);</span><br><span class="line">    CFStringAppend(sql, CFSTR(<span class="string">"INSERT INTO "</span>));</span><br><span class="line">    CFStringAppend(sql, item-&gt;class-&gt;name);</span><br><span class="line">    CFStringAppend(sql, CFSTR(<span class="string">"("</span>));</span><br><span class="line">    <span class="keyword">bool</span> needComma = <span class="literal">false</span>;</span><br><span class="line">    CFIndex used_attr = <span class="number">0</span>;</span><br><span class="line">    SecDbForEachAttr(item-&gt;class, attr) &#123;</span><br><span class="line">        <span class="keyword">if</span> (use_attr(attr)) &#123;</span><br><span class="line">            ++used_attr;</span><br><span class="line">            SecDbAppendElement(sql, attr-&gt;name, &amp;needComma);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    CFStringAppend(sql, CFSTR(<span class="string">")VALUES(?"</span>));</span><br><span class="line">    <span class="keyword">while</span> (used_attr-- &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        CFStringAppend(sql, CFSTR(<span class="string">",?"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    CFStringAppend(sql, CFSTR(<span class="string">")"</span>));</span><br><span class="line">    <span class="keyword">return</span> sql;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SecurityServer-与-SecurityAgent"><a href="#SecurityServer-与-SecurityAgent" class="headerlink" title="SecurityServer 与 SecurityAgent"></a>SecurityServer 与 SecurityAgent</h2><p>Login Keychain is unlocked when user unlock the device, so wo do not see Keychain decryption or unlocking in the previous inserting keychain item.</p>
+<p>However System Keychain or private Keychain(user created) will need Keychain encryption/decryption, locking/unlocing, Security Server is responsible for that.</p>
+<p>Security Server(/usr/sbin/securityd) is a daemon service process which run as root, as the architecture diagram shows, Security Server offsers CSP/DL plugin for CDSA, namely data encryption and storage.</p>
+<p>Security Server host service based on ucsp MIG interface, clients can access the internal Server object through mig interface. Fortunately any process can use this ucsp MIG interface.</p>
+<p>By reading the source code, I see many features provided by Security Server:</p>
+<ul>
+<li>Managing Security Server’s clients(Session, Connection)</li>
+<li>Authentication and authrization</li>
+<li>Managing Keychain databases</li>
+<li>Code signature generating/verifying</li>
+<li>Data encryption and decryption(ucsp_server_encrypt, ucsp_server_decrypt)</li>
+<li>Key, key pair generating(ucsp_server_generateKey, ucsp_server_generateKeyPair, ucsp_server_wrapKey, ucsp_server_unwrapKey)</li>
+<li>Code Signing Hosting(disappeared in 10.15, not yet in-depth analysis)</li>
+</ul>
+<p>It is obvious that Security Server(securityd) has many highly privileged operations, and it manages a lot of sensitive data, run as root, so if we can find a vulnerability in this service process, it will have a big impact.</p>
+<p>KeySteal is such a vulnerability occurred in securityd, when successfully exploited, any process can access passwords hold by Keychain.</p>
+<p>But how can we interact with Security Server(securityd) based on MIG interface? </p>
+<p>The ucsp MIG definition file exists in the source code of Security framework(OSX/libsecurityd/mig/ucsp.defs). Unfortunately only a few documentations about MIG can be found, and none of them can be found about interacting with Security Server certainly. In the end, I extract the code snippet which meet our needs from Linus Henze’s <a href="https://github.com/LinusHenze/Keysteal" target="_blank" rel="noopener">KeySteal Exploit</a>, based on the snippet, I create a simple ucsp client accessing Security Server’s ucsp_server_setup interface.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> UCSP_ARGS    gServerPort, gReplyPort, &amp;securitydCreds, &amp;rcode</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ATTRDATA(attr) (void *)(attr), (attr) ? strlen((attr)) : 0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CALL(func) \</span></span><br><span class="line">    <span class="keyword">security_token_t</span> securitydCreds; \</span><br><span class="line">    CSSM_RETURN rcode; \</span><br><span class="line">    <span class="keyword">if</span> (KERN_SUCCESS != func) \</span><br><span class="line">        <span class="keyword">return</span> errSecCSInternalError; \</span><br><span class="line">    <span class="keyword">if</span> (securitydCreds.val[<span class="number">0</span>] != <span class="number">0</span>) \</span><br><span class="line">        <span class="keyword">return</span> CSSM_ERRCODE_VERIFICATION_FAILURE; \</span><br><span class="line">    <span class="keyword">return</span> rcode</span><br><span class="line"></span><br><span class="line">#define SSPROTOVERSION <span class="number">20000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">mach_port_t</span> gServerPort;</span><br><span class="line"><span class="keyword">mach_port_t</span> gReplyPort;</span><br><span class="line"></span><br><span class="line"><span class="function">CSSM_RETURN <span class="title">securityd_setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mach_port_allocate(mach_task_self(), MACH_PORT_RIGHT_RECEIVE, &amp;gReplyPort);</span><br><span class="line">    mach_port_insert_right(mach_task_self(), gReplyPort, gReplyPort, MACH_MSG_TYPE_MAKE_SEND);</span><br><span class="line">    bootstrap_look_up(bootstrap_port, (<span class="keyword">char</span>*)<span class="string">"com.apple.SecurityServer"</span>, &amp;gServerPort);</span><br><span class="line">    ClientSetupInfo info = &#123; <span class="number">0x1234</span>, SSPROTOVERSION &#125;;</span><br><span class="line">    CALL(ucsp_client_setup(UCSP_ARGS, mach_task_self(), info, <span class="string">"?:unspecified"</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">mach_port_t</span> port;</span><br><span class="line">    <span class="keyword">mach_port_t</span> bootstrap_port;</span><br><span class="line">    task_get_bootstrap_port(mach_task_self(), &amp;bootstrap_port);</span><br><span class="line">    <span class="keyword">kern_return_t</span> kr = bootstrap_look_up(bootstrap_port, <span class="string">"com.apple.SecurityServer"</span>, &amp;port);</span><br><span class="line">    securityd_setup();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SecurityAgent"><a href="#SecurityAgent" class="headerlink" title="SecurityAgent"></a>SecurityAgent</h3><p>As mentioned above, Security Server is also responsible for managing authentication and authroization.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/auth_security_agent.png" title="Image">
+
+<p>When client request Security Server to launch authentication/authroization verifying, if Security Server need to interact with the user (enter password) to verify identity, Security Server daemon will talk to Security Agent through XPC communication. The Security Agent, run as current user, pop up the interactive dialog to user, and then passwords typed by user will send back to Security Server, Security Server processing the actual verification. Throughout all the verification process, client DO NOT touch any sensitive information(such as passwords), all it can get is the verification result, true or false, yes or not. This mechanism can avoid the leakage of sensitive information and at the same time it will be transparent to the client when system add new authentication extension.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/securityd_securityagent.jpg" title="Image">
+
+
+<h2 id="Vulnerabilities-History"><a href="#Vulnerabilities-History" class="headerlink" title="Vulnerabilities History"></a>Vulnerabilities History</h2><p>After we have learned some of the necessary Security framework architecture content above, let’s move on to the Security framework vulnerabilities which occured in macOS 10.14.*, and try to understand how the vulnerability works and what components the vulnerability is in.</p>
+<p>What needs to be declared in advance is that Apple do not provide any details about the patched vulnerabilities except short title. The following are my own analysis based on the source code diff, so it also means that the results may not be entirely correct. If you find any mistakes or omissions, please don’t hesitate to point them out.</p>
+<h3 id="CVE-2019-8604-fixed-in-10-14-5"><a href="#CVE-2019-8604-fixed-in-10-14-5" class="headerlink" title="CVE-2019-8604 (fixed in 10.14.5)"></a>CVE-2019-8604 (fixed in 10.14.5)</h3><p>By comparing the two versions of the source code, vulerability patch of CVE-2019-8604 can be found.</p>
+<p>This vulnerablity exists in Security Server Daemon(securityd), when Security Server deal with Keychain database name, ucsp_server_setDbName of mig interface can set any length of dbname to Security Server object, ucsp_server_getDbName of interface will copy the given dbname to name parameter, the name parameter is designed to length PATH_MAX. So, if we pass a overlong dbname, ucsp_server_getDbName will trigger OOB write when memcpy.</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- a/Security-58286.251.4/securityd/src/transition.cpp</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.260.20/securityd/src/transition.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="addition">+static void checkPathLength(char const *str) &#123;</span></span><br><span class="line"><span class="addition">+    if (strlen(str) &gt;= PATH_MAX) &#123;</span></span><br><span class="line"><span class="addition">+        secerror("SecServer: path too long");</span></span><br><span class="line"><span class="addition">+        CssmError::throwMe(CSSMERR_CSSM_MEMORY_ERROR);</span></span><br><span class="line"><span class="addition">+    &#125;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"></span><br><span class="line">@@ -306,15 +313,16 @@ kern_return_t ucsp_server_getDbName(UCSP_ARGS, DbHandle db, char name[PATH_MAX])</span><br><span class="line"> &#123;</span><br><span class="line">        BEGIN_IPC(getDbName)</span><br><span class="line">        string result = Server::database(db)-&gt;dbName();</span><br><span class="line"><span class="deletion">-       assert(result.length() &lt; PATH_MAX);</span></span><br><span class="line"><span class="addition">+       checkPathLength(result.c_str());</span></span><br><span class="line">        memcpy(name, result.c_str(), result.length() + 1);</span><br><span class="line"></span><br><span class="line">        END_IPC(DL)</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> kern_return_t ucsp_server_setDbName(UCSP_ARGS, DbHandle db, const char *name)</span><br><span class="line"> &#123;</span><br><span class="line">        BEGIN_IPC(setDbName)</span><br><span class="line"><span class="addition">+       checkPathLength(name);</span></span><br><span class="line">        Server::database(db)-&gt;dbName(name);</span><br><span class="line">        END_IPC(DL)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>It is quite natural that the patch add a checking to length of dbname, to avode overlong dbname triggering oob memory copying. One more point to explain, both std::string and strlen can and only can be truncated by “\0”, so the way of setDbName and getDbName treating dbname is consistent.</p>
+<h3 id="CVE-2019-8520-fixed-in-10-14-4"><a href="#CVE-2019-8520-fixed-in-10-14-4" class="headerlink" title="CVE-2019-8520 (fixed in 10.14.4)"></a>CVE-2019-8520 (fixed in 10.14.4)</h3><p>By comparing the two versions of the source code, vulerability patch of CVE-2019-8520 can be found.</p>
+<p>This vulnerablity exists also in Security Server Daemon(securityd), when Security Server deal with authroization or authentication, if it need to interact with the user (enter password) to verify identity, it will ask for Security Agent’s help, Security Agent finally pop up a diaglog to user.</p>
+<p>The communication between Security Server and Security Agent is based on XPC, when receiving response from Security Agent, in xpcArrayToAuthItemSet, the data(AUTH_XPC_ITEM_VALUE) and the length(AUTH_XPC_ITEM_SENSITIVE_VALUE_LENGTH) are passed by two separate fields. If providing a small data and a big length, sensitiveLength bytes of data will be copied from data to dataCopy, if sensitiveLength exceeds the actual size of data. OOB read will occurs.</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- a/Security-58286.240.4/securityd/src/agentquery.cpp</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.251.4/securityd/src/agentquery.cpp</span></span><br><span class="line"></span><br><span class="line">static void xpcArrayToAuthItemSet(AuthItemSet *setToBuild, xpc_object_t input) &#123;</span><br><span class="line">    setToBuild-&gt;clear();</span><br><span class="line"></span><br><span class="line">    xpc_array_apply(input,  ^bool(size_t index, xpc_object_t item) &#123;</span><br><span class="line">        const char *name = xpc_dictionary_get_string(item, AUTH_XPC_ITEM_NAME);</span><br><span class="line"></span><br><span class="line">        size_t length;</span><br><span class="line">        const void *data = xpc_dictionary_get_data(item, AUTH_XPC_ITEM_VALUE, &amp;length);</span><br><span class="line">        void *dataCopy = 0;</span><br><span class="line"></span><br><span class="line">        // &lt;rdar://problem/13033889&gt; authd is holding on to multiple copies of my password in the clear</span><br><span class="line">        bool sensitive = xpc_dictionary_get_value(item, AUTH_XPC_ITEM_SENSITIVE_VALUE_LENGTH);</span><br><span class="line">        if (sensitive) &#123;</span><br><span class="line">            size_t sensitiveLength = (size_t)xpc_dictionary_get_uint64(item, AUTH_XPC_ITEM_SENSITIVE_VALUE_LENGTH);</span><br><span class="line"><span class="addition">+            if (sensitiveLength &gt; length) &#123;</span></span><br><span class="line"><span class="addition">+                secnotice("SecurityAgentXPCQuery", "Sensitive data len %zu is not valid", sensitiveLength);</span></span><br><span class="line"><span class="addition">+                return true;</span></span><br><span class="line"><span class="addition">+            &#125;</span></span><br><span class="line">            dataCopy = malloc(sensitiveLength);</span><br><span class="line">            memcpy(dataCopy, data, sensitiveLength);</span><br><span class="line">            memset_s((void *)data, length, 0, sensitiveLength); // clear the sensitive data, memset_s is never optimized away</span><br><span class="line">            length = sensitiveLength;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            dataCopy = malloc(length);</span><br><span class="line">            memcpy(dataCopy, data, length);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        uint64_t flags = xpc_dictionary_get_uint64(item, AUTH_XPC_ITEM_FLAGS);</span><br><span class="line">        AuthItemRef nextItem(name, AuthValueOverlay((uint32_t)length, dataCopy), (uint32_t)flags);</span><br><span class="line">        setToBuild-&gt;insert(nextItem);</span><br><span class="line">        memset(dataCopy, 0, length); // The authorization items contain things like passwords, so wiping clean is important.</span><br><span class="line">        free(dataCopy);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The patch add a checking, to ensure that sensitiveLength is not greater than actual size of data.</p>
+<h3 id="CVE-2019-8526-fixed-in-10-14-4"><a href="#CVE-2019-8526-fixed-in-10-14-4" class="headerlink" title="CVE-2019-8526 (fixed in 10.14.4)"></a>CVE-2019-8526 (fixed in 10.14.4)</h3><p>By comparing the two versions of the source code, vulerability patch of CVE-2019-8526 can be found.</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">--- a/Security-58286.240.4/securityd/src/child.cpp</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.251.4/securityd/src/child.cpp</span></span><br><span class="line">@@ -57,7 +57,7 @@ ServerChild::ServerChild()</span><br><span class="line"> //</span><br><span class="line"> ServerChild::~ServerChild()</span><br><span class="line"> &#123;</span><br><span class="line"><span class="deletion">-       mServicePort.destroy();</span></span><br><span class="line"><span class="addition">+       mServicePort.deallocate();</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--- a/Security-58286.240.4/securityd/src/clientid.cpp</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.251.4/securityd/src/clientid.cpp</span></span><br><span class="line">@@ -45,14 +45,18 @@ ClientIdentification::ClientIdentification()</span><br><span class="line"> // Initialize the ClientIdentification.</span><br><span class="line"> // This creates a process-level code object for the client.</span><br><span class="line"> //</span><br><span class="line"><span class="deletion">-void ClientIdentification::setup(pid_t pid)</span></span><br><span class="line"><span class="addition">+void ClientIdentification::setup(Security::CommonCriteria::AuditToken const &amp;audit)</span></span><br><span class="line"> &#123;</span><br><span class="line">     StLock&lt;Mutex&gt; _(mLock);</span><br><span class="line">     StLock&lt;Mutex&gt; __(mValidityCheckLock);</span><br><span class="line"><span class="deletion">-    OSStatus rc = SecCodeCreateWithPID(pid, kSecCSDefaultFlags, &amp;mClientProcess.aref());</span></span><br><span class="line"><span class="deletion">-       if (rc)</span></span><br><span class="line"><span class="deletion">-               secinfo("clientid", "could not get code for process %d: OSStatus=%d",</span></span><br><span class="line"><span class="deletion">-                       pid, int32_t(rc));</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+    audit_token_t const token = audit.auditToken();</span></span><br><span class="line"><span class="addition">+    OSStatus rc = SecCodeCreateWithAuditToken(&amp;token, kSecCSDefaultFlags, &amp;mClientProcess.aref());</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+    if (rc) &#123;</span></span><br><span class="line"><span class="addition">+        secerror("could not get code for process %d: OSStatus=%d",</span></span><br><span class="line"><span class="addition">+                audit.pid(), int32_t(rc));</span></span><br><span class="line"><span class="addition">+    &#125;</span></span><br><span class="line">     mGuests.erase(mGuests.begin(), mGuests.end());</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--- a/Security-58286.240.4/securityd/src/csproxy.cpp</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.251.4/securityd/src/csproxy.cpp</span></span><br><span class="line">@@ -64,13 +64,12 @@ void CodeSigningHost::reset()</span><br><span class="line">        case noHosting:</span><br><span class="line">                break;  // nothing to do</span><br><span class="line">        case dynamicHosting:</span><br><span class="line"><span class="deletion">-               mHostingPort.destroy();</span></span><br><span class="line"><span class="deletion">-               mHostingPort = MACH_PORT_NULL;</span></span><br><span class="line"><span class="addition">+               mHostingPort.deallocate();</span></span><br><span class="line">         secnotice("SecServer", "%d host unregister", mHostingPort.port());</span><br><span class="line">                break;</span><br><span class="line">        case proxyHosting:</span><br><span class="line">                Server::active().remove(*this); // unhook service handler</span><br><span class="line"><span class="deletion">-               mHostingPort.destroy(); // destroy receive right</span></span><br><span class="line"><span class="addition">+               mHostingPort.modRefs(MACH_PORT_RIGHT_RECEIVE, -1);</span></span><br><span class="line">                mHostingState = noHosting;</span><br><span class="line">                mHostingPort = MACH_PORT_NULL;</span><br><span class="line">                mGuests.erase(mGuests.begin(), mGuests.end());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--- a/Security-58286.240.4/securityd/src/process.cpp</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.251.4/securityd/src/process.cpp</span></span><br><span class="line"><span class="meta">@@ -40,7 +40,7 @@</span></span><br><span class="line"> // Construct a Process object.</span><br><span class="line"> //</span><br><span class="line"> Process::Process(TaskPort taskPort,    const ClientSetupInfo *info, const CommonCriteria::AuditToken &amp;audit)</span><br><span class="line"><span class="deletion">- :  mTaskPort(taskPort), mByteFlipped(false), mPid(audit.pid()), mUid(audit.euid()), mGid(audit.egid())</span></span><br><span class="line"><span class="addition">+ :  mTaskPort(taskPort), mByteFlipped(false), mPid(audit.pid()), mUid(audit.euid()), mGid(audit.egid()), mAudit(audit)</span></span><br><span class="line"> &#123;</span><br><span class="line">        StLock&lt;Mutex&gt; _(*this);</span><br><span class="line"></span><br><span class="line">@@ -48,6 +48,11 @@ Process::Process(TaskPort taskPort,  const ClientSetupInfo *info, const CommonCri</span><br><span class="line">        parent(Session::find(audit.sessionId(), true));</span><br><span class="line"></span><br><span class="line">        // let's take a look at our wannabe client...</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+       // Not enough to make sure we will get the right process, as</span></span><br><span class="line"><span class="addition">+       // pids get recycled. But we will later create the actual SecCode using</span></span><br><span class="line"><span class="addition">+       // the audit token, which is unique to the one instance of the process,</span></span><br><span class="line"><span class="addition">+       // so this just catches a pid mismatch early.</span></span><br><span class="line">        if (mTaskPort.pid() != mPid) &#123;</span><br><span class="line">                secnotice("SecServer", "Task/pid setup mismatch pid=%d task=%d(%d)",</span><br><span class="line">                                  mPid, mTaskPort.port(), mTaskPort.pid());</span><br><span class="line">@@ -55,7 +60,14 @@ Process::Process(TaskPort taskPort,  const ClientSetupInfo *info, const CommonCri</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        setup(info);</span><br><span class="line"><span class="deletion">-       ClientIdentification::setup(this-&gt;pid());</span></span><br><span class="line"><span class="addition">+       ClientIdentification::setup(this-&gt;audit_token());</span></span><br></pre></td></tr></table></figure>
+
+<p>This is the KeySteal vulnerability that I have read paper before, vulnerablity exists in Security Server Daemon(securityd), Security Server provides a feature named Hosting Guest Code. Two problems can be seen from the vulnerability patch:</p>
+<ul>
+<li><p>The first one exists in implementing Hosting Guest Code. When Security Server creeate SecCode object, it use SecCodeCreateWithPID API, this API identifies the client process by pid, so as the comment code in the patch says, there is a problem with PID Reuse. The way fix this problem is replacing SecCodeCreateWithPID with SecCodeCreateWithAuditToken, SecCodeCreateWithAuditToken API identifies the client process by audit token. Reasons and attack methods for pid reuse has already been fully explained in Samuel Groß’s <a href="https://saelo.github.io/presentations/warcon18_dont_trust_the_pid.pdf" target="_blank" rel="noopener">《Don’t Trust the PID!》</a></p>
+</li>
+<li><p>The second is the reference counting problem of mach port. CodeSigningHost::reset() calls destory() to forcibly release mach port. But the destroyed mach port may still be referenced by some data structures, and the mach port in the user-mode process itself is a Mach Port Name, it’s just a number. Since it’s number, there’s a possibility of reuse, so, UAF can be implemented if we can reoccupy it before the next use. It’s easy to fix the problem, replace destory() with a reference-counted version of deallocate().</p>
+</li>
+</ul>
+<h3 id="CVE-2018-4400-fixed-in-10-14-1"><a href="#CVE-2018-4400-fixed-in-10-14-1" class="headerlink" title="CVE-2018-4400 (fixed in 10.14.1)"></a>CVE-2018-4400 (fixed in 10.14.1)</h3><p>The vulnerability is described in Apple bulletin that denies service when processing S/MIME messages. Through code comparison, I got a suspected patch, and I am not sure.</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- a/Security-58286.200.222/OSX/libsecurity_smime/lib/smimeutil.c</span></span><br><span class="line"><span class="comment">+++ b/Security-58286.220.15/OSX/libsecurity_smime/lib/smimeutil.c</span></span><br><span class="line">@@ -733,6 +733,8 @@ SecSMIMEGetCertFromEncryptionKeyPreference(SecKeychainRef keychainOrArray, CSSM_</span><br><span class="line">        cert = CERT_FindCertByIssuerAndSN(keychainOrArray, rawCerts, NULL, tmppoolp, ekp.id.issuerAndSN);</span><br><span class="line">        break;</span><br><span class="line">     case NSSSMIMEEncryptionKeyPref_RKeyID:</span><br><span class="line"><span class="addition">+        cert = CERT_FindCertBySubjectKeyID(keychainOrArray, rawCerts, NULL, &amp;ekp.id.recipientKeyID-&gt;subjectKeyIdentifier);</span></span><br><span class="line"><span class="addition">+        break;</span></span><br><span class="line">     case NSSSMIMEEncryptionKeyPref_SubjectKeyID:</span><br><span class="line">         cert = CERT_FindCertBySubjectKeyID(keychainOrArray, rawCerts, NULL, ekp.id.subjectKeyID);</span><br><span class="line">        break;</span><br></pre></td></tr></table></figure>
+
+<p>I am not very familiar with certificate management and related data structures for the time being, so I will not analyze further.</p>
+<p>The above are some of the identified vulnerabilities and patches that I have found so far. Because Apple open source code lags behind version updates, this vulnerabilities exists in 10.14.*.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>This blog is what I researched and did during this time about Security Framework. The source code of Security Framework is huge and I only focused on Keychain and Security Server components that have been found to have more vulnerabilities in history。Other components like Auth will be analyzed when I have time, and, of course, I will continue to share with community through this site.</p>
+<p>If you find something wrong above, or you are also interested in macOS, welcome to ping me <a href="https://twitter.com/yuebinsun" target="_blank" rel="noopener">@yuebinsun</a>.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Documentation of Security Framework</p>
+<p><a href="https://developer.apple.com/documentation/security?language=objc" target="_blank" rel="noopener">https://developer.apple.com/documentation/security?language=objc</a></p>
+<p>[2] Apple Open Source Code</p>
+<p><a href="https://opensource.apple.com/" target="_blank" rel="noopener">https://opensource.apple.com/</a></p>
+<p>[3] KeySteal Vulnerability</p>
+<p><a href="https://www.pinauten.de/resources/KeySteal_OBTS_2019.pdf" target="_blank" rel="noopener">https://www.pinauten.de/resources/KeySteal_OBTS_2019.pdf</a></p>
+<p>[4] Keychain Wikipedia</p>
+<p><a href="https://en.wikipedia.org/wiki/Keychain_(software)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Keychain_(software)</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" data-id="ck78zuz820005abrkqmqxval1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">macOS Security Framework and previous CVEs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/macOS/" style="font-size: 10px;">macOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/">macOS Security Framework and previous CVEs</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/">macOS Security Framework and previous CVEs</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/">Microsoft Edge Chakra OP_NewScObjArray 类型混淆漏洞分析笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/">GeekPwn 2016 Windows 服务提权漏洞的分析和利用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/">Windows Logical EoP Workshop Writeup</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 rekken<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

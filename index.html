@@ -78,6 +78,103 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-macOS-Security-Framework-and-Previous-CVEs-EN" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" class="article-date">
+  <time datetime="2020-02-26T09:20:00.000Z" itemprop="datePublished">2020-02-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/">macOS Security Framework and previous CVEs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>COVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking.</p>
+<p>In this blog, I will try to analyze Security framework, especially Keychain, and previous vulnerabilities of the Secuirty framework。</p>
+<h2 id="Security-Framework"><a href="#Security-Framework" class="headerlink" title="Security Framework"></a>Security Framework</h2><p>Security framework is responsible for providing authentication and authorization, secure data storage and transportation, code signing, encryption/decryption services. Apps can use this services by using API of Security framework directly without knowing or caring about its implementation details.</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/security-framework.png" title="Image">
+
+<p>But what are the components which composes the Security framework, and how the components collaborate with each other?</p>
+        
+          <p class="article-more-link">
+            <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" data-id="ck78zuz820005abrkqmqxval1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-macOS-Security-Framework-and-Previous-CVEs-CN" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" class="article-date">
+  <time datetime="2020-02-26T08:59:00.000Z" itemprop="datePublished">2020-02-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/">macOS Security Framework and previous CVEs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
+<p>本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。</p>
+<h2 id="Security-Framework-简介"><a href="#Security-Framework-简介" class="headerlink" title="Security Framework 简介"></a>Security Framework 简介</h2><p>Security Framework 主要负责为 App 提供认证与授权、安全数据存储与传输（Keychain，App Transport Security）、代码签名、加密解密功能。</p>
+<p>第三方 App 通过引用 Security Framework，使用 Apple 提供的 API 就可以直接使用这些功能，不用关心底层实现的细节。</p>
+<img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/security-framework.png" title="Image">
+
+<p>但 Security Framework 都有哪些组件，又是如何构建起来的呢？</p>
+        
+          <p class="article-more-link">
+            <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="ck78zuz810004abrkrte0ggil" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" class="article-date">
@@ -114,7 +211,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="ck6yhy9df000423rkw8yj8kg2" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="ck78zuz8l000aabrkwtrvyo3x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -170,7 +267,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="ck6yhy9cc000123rkxojuo0l9" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="ck78zuz650001abrk6v9n20gv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +318,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="ck6yhy9dk000523rk5szomjp9" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="ck78zuzal000babrknmmam9hi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -258,7 +355,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="ck6yhy9ch000323rks0er4g7c" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="ck78zuz780002abrkh3ki3zcj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -278,15 +375,29 @@ ga('send', 'pageview');
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/macOS/" style="font-size: 10px;">macOS</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
   </div>
 
@@ -299,6 +410,14 @@ ga('send', 'pageview');
       <ul>
         
           <li>
+            <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/">macOS Security Framework and previous CVEs</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/">macOS Security Framework and previous CVEs</a>
+          </li>
+        
+          <li>
             <a href="/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/">Microsoft Edge Chakra OP_NewScObjArray 类型混淆漏洞分析笔记</a>
           </li>
         
@@ -308,10 +427,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/">Windows Logical EoP Workshop Writeup</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/01/hello-hexo/">Hello Hexo</a>
           </li>
         
       </ul>
