@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>The Road to 0x41414141</title>
+  <title>Rekken&#39;s Blog</title>
   
-  
+  <subtitle>The Road to 0x41414141</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://rekken.github.io/"/>
