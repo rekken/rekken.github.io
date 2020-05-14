@@ -20,13 +20,13 @@ ga('send', 'pageview');
   
   <title>macOS Security Framework and previous CVEs | Yuebin Sun&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security Framework 简介Security Framework 主要负责为 App 提供认证与授权、安全数据存">
+  <meta name="description" content="Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security">
 <meta name="keywords" content="macOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macOS Security Framework and previous CVEs">
 <meta property="og:url" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/index.html">
 <meta property="og:site_name" content="Yuebin Sun&#39;s Blog">
-<meta property="og:description" content="摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security Framework 简介Security Framework 主要负责为 App 提供认证与授权、安全数据存">
+<meta property="og:description" content="Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/security-framework.png">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/csda-of-macos.png">
@@ -36,10 +36,10 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/keychain_api_and_secd.jpg">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/auth_security_agent.png">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/securityd_securityagent.jpg">
-<meta property="og:updated_time" content="2020-02-29T09:11:17.774Z">
+<meta property="og:updated_time" content="2020-05-14T09:39:30.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macOS Security Framework and previous CVEs">
-<meta name="twitter:description" content="摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security Framework 简介Security Framework 主要负责为 App 提供认证与授权、安全数据存">
+<meta name="twitter:description" content="Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security">
 <meta name="twitter:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/security-framework.png">
 <meta name="twitter:creator" content="@yuebinsun">
   
@@ -116,7 +116,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
+        <p>Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
 <p>本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。</p>
 <h2 id="Security-Framework-简介"><a href="#Security-Framework-简介" class="headerlink" title="Security Framework 简介"></a>Security Framework 简介</h2><p>Security Framework 主要负责为 App 提供认证与授权、安全数据存储与传输（Keychain，App Transport Security）、代码签名、加密解密功能。</p>
 <p>第三方 App 通过引用 Security Framework，使用 Apple 提供的 API 就可以直接使用这些功能，不用关心底层实现的细节。</p>
@@ -228,7 +229,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="ck7b4uwaa00046qrkb0gowoz3" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="cka6kw8p40006xurkqazkdvpe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
@@ -289,7 +290,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
   </div>
 
@@ -300,6 +301,10 @@ ga('send', 'pageview');
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/">Security Flaws in Adobe Acrobat Reader Allow Malicious Program to Gain Root on macOS Silently</a>
+          </li>
         
           <li>
             <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/">macOS Security Framework and previous CVEs</a>
@@ -315,10 +320,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/">GeekPwn 2016 Windows 服务提权漏洞的分析和利用</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/">Windows Logical EoP Workshop Writeup</a>
           </li>
         
       </ul>

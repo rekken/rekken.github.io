@@ -82,6 +82,52 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/" class="article-date">
+  <time datetime="2020-05-14T09:32:39.000Z" itemprop="datePublished">2020-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/">Security Flaws in Adobe Acrobat Reader Allow Malicious Program to Gain Root on macOS Silently</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Yuebin Sun(<a href="https://twitter.com/yuebinsun" target="_blank" rel="noopener">@yuebinsun</a>) of Tencent Security Xuanwu Lab</p>
+<h2 id="0x0-Summary"><a href="#0x0-Summary" class="headerlink" title="0x0 Summary"></a>0x0 Summary</h2><p>Today, Adobe Acrobat Reader DC for macOS patched three critical vulnerabilities(CVE-2020-9615, CVE-2020-9614, CVE-2020-9613) I reported. The only requirement needed to trigger the vulnerabilities is that Adobe Acrobat Reader DC has been installed. Normal user on macOS(with SIP enabled) can locally exploit this vulnerabilities chain to elevate privilege to the ROOT without a user being aware. In this blog, I will analyze the details of vulnerabilities and show how to exploit them.</p>
+<h2 id="0x1-Background"><a href="#0x1-Background" class="headerlink" title="0x1 Background"></a>0x1 Background</h2><p>Root process has super power, it almost can do anything, reading/writing all sensitive files/databases such as Images/Calendars. However in modern macOS, root processes outside of sandbox are rare, most macOS builtin services run within sandbox. They are no longer the king, they imprison themselves in a cage based on declarative sandbox profile rules. </p>
+<p>Good news, popular softwares with high privileged services are new good target in addition to macOS builtin services, so Adobe Acrobat Reader DC catch my attention.</p>
+        
+          <p class="article-more-link">
+            <a href="/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://rekken.github.io/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/" data-id="cka6kw8nq0001xurkib0jtfo5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-macOS-Security-Framework-and-Previous-CVEs-EN" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" class="article-date">
@@ -104,7 +150,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>COVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking.</p>
+        <p>Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>COVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking.</p>
 <p>In this blog, I will try to analyze Security framework, especially Keychain, and previous vulnerabilities of the Secuirty framework。</p>
 <h2 id="Security-Framework"><a href="#Security-Framework" class="headerlink" title="Security Framework"></a>Security Framework</h2><p>Security framework is responsible for providing authentication and authorization, secure data storage and transportation, code signing, encryption/decryption services. Apps can use this services by using API of Security framework directly without knowing or caring about its implementation details.</p>
 <img src="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/security-framework.png" title="Image">
@@ -118,7 +165,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" data-id="ck7b4uwaa00056qrkx1fwzexx" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" data-id="cka6kw8p30005xurkmvemx2zo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
@@ -152,7 +199,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
+        <p>Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
 <p>本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。</p>
 <h2 id="Security-Framework-简介"><a href="#Security-Framework-简介" class="headerlink" title="Security Framework 简介"></a>Security Framework 简介</h2><p>Security Framework 主要负责为 App 提供认证与授权、安全数据存储与传输（Keychain，App Transport Security）、代码签名、加密解密功能。</p>
 <p>第三方 App 通过引用 Security Framework，使用 Apple 提供的 API 就可以直接使用这些功能，不用关心底层实现的细节。</p>
@@ -167,7 +215,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="ck7b4uwaa00046qrkb0gowoz3" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="cka6kw8p40006xurkqazkdvpe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
@@ -215,7 +263,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="ck7b4uwal000a6qrkdldk22el" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="cka6kw8ph000bxurknrqhmve8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -271,7 +319,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="ck7b4uw9n00016qrkhi2nhz65" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="cka6kw8ox0003xurkuuy5n1dq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -322,7 +370,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="ck7b4uwb8000b6qrkcysfd4ln" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="cka6kw8v6000cxurkoeanehp5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -359,7 +407,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="ck7b4uw9r00036qrk1yy983q1" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="cka6kw8on0002xurk257r0wkm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -401,7 +449,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
   </div>
 
@@ -412,6 +460,10 @@ ga('send', 'pageview');
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/">Security Flaws in Adobe Acrobat Reader Allow Malicious Program to Gain Root on macOS Silently</a>
+          </li>
         
           <li>
             <a href="/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/">macOS Security Framework and previous CVEs</a>
@@ -427,10 +479,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/">GeekPwn 2016 Windows 服务提权漏洞的分析和利用</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/">Windows Logical EoP Workshop Writeup</a>
           </li>
         
       </ul>
