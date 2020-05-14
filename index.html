@@ -105,9 +105,9 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p>Yuebin Sun(<a href="https://twitter.com/yuebinsun" target="_blank" rel="noopener">@yuebinsun</a>) of Tencent Security Xuanwu Lab</p>
-<h2 id="0x0-Summary"><a href="#0x0-Summary" class="headerlink" title="0x0 Summary"></a>0x0 Summary</h2><p>Today, Adobe Acrobat Reader DC for macOS patched three critical vulnerabilities(CVE-2020-9615, CVE-2020-9614, CVE-2020-9613) I reported. The only requirement needed to trigger the vulnerabilities is that Adobe Acrobat Reader DC has been installed. Normal user on macOS(with SIP enabled) can locally exploit this vulnerabilities chain to elevate privilege to the ROOT without a user being aware. In this blog, I will analyze the details of vulnerabilities and show how to exploit them.</p>
-<h2 id="0x1-Background"><a href="#0x1-Background" class="headerlink" title="0x1 Background"></a>0x1 Background</h2><p>Root process has super power, it almost can do anything, reading/writing all sensitive files/databases such as Images/Calendars. However in modern macOS, root processes outside of sandbox are rare, most macOS builtin services run within sandbox. They are no longer the king, they imprison themselves in a cage based on declarative sandbox profile rules. </p>
-<p>Good news, popular softwares with high privileged services are new good target in addition to macOS builtin services, so Adobe Acrobat Reader DC catch my attention.</p>
+<h2 id="0x0-Summary"><a href="#0x0-Summary" class="headerlink" title="0x0 Summary"></a>0x0 Summary</h2><p>Today, Adobe Acrobat Reader DC for macOS patched three critical vulnerabilities(CVE-2020-9615, CVE-2020-9614, CVE-2020-9613) I reported. The only requirement needed to trigger the vulnerabilities is that Adobe Acrobat Reader DC has been installed. A normal user on macOS(with SIP enabled) can locally exploit this vulnerabilities chain to elevate privilege to the ROOT without a user being aware. In this blog, I will analyze the details of vulnerabilities and show how to exploit them.</p>
+<h2 id="0x1-Background"><a href="#0x1-Background" class="headerlink" title="0x1 Background"></a>0x1 Background</h2><p>The root process has superpowers, it almost can do anything, reading/writing all sensitive files/databases such as Images/Calendars. However in modern macOS, root processes outside of sandbox are rare, most macOS built-in services run within a sandbox. They are no longer the king, they imprison themselves in a cage based on declarative sandbox profile rules. </p>
+<p>Good news, popular software with high privileged services are new good target in addition to macOS built-in services, so Adobe Acrobat Reader DC catch my attention.</p>
         
           <p class="article-more-link">
             <a href="/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/#more">Read More</a>
@@ -116,7 +116,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/" data-id="cka6kw8nq0001xurkib0jtfo5" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2020/05/14/Security-Flaws-in-Adobe-Acrobat-Reader-Allow-Malicious-Program-to-Gain-Root-on-macOS-Silently/" data-id="cka6wq83s0004qvrkh2rela5y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
@@ -165,7 +165,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" data-id="cka6kw8p30005xurkmvemx2zo" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-EN/" data-id="cka6wq8440008qvrk1nzf8yml" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
@@ -215,7 +215,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="cka6kw8p40006xurkqazkdvpe" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/" data-id="cka6wq8430007qvrkpfmz8gvu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/">macOS</a></li></ul>
@@ -263,7 +263,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="cka6kw8ph000bxurknrqhmve8" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2019/03/31/Analysis-of-Microsoft-Edge-Chakra-OP-NewScObjArray-Type-Confusion-Vulnerability/" data-id="cka6wq84d000bqvrkivo7w0p4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -319,7 +319,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="cka6kw8ox0003xurkuuy5n1dq" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/07/23/Analysis-and-Exploitation-of-GeekPwn-2016-Windows-Services-EoP-Vulnerability/" data-id="cka6wq83j0003qvrkysjsyf3g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -370,7 +370,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="cka6kw8v6000cxurkoeanehp5" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/05/30/Windows-Logical-EoP-Workshop-Writeup/" data-id="cka6wq84w000cqvrksi4g607q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -407,7 +407,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="cka6kw8on0002xurk257r0wkm" class="article-share-link">Share</a>
+      <a data-url="https://rekken.github.io/2017/01/01/hello-hexo/" data-id="cka6wq83f0001qvrklt2urlzl" class="article-share-link">Share</a>
       
       
     </footer>
