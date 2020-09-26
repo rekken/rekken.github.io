@@ -25,9 +25,9 @@ ga('send', 'pageview');
 <meta property="og:url" content="https://rekken.github.io/index.html">
 <meta property="og:site_name" content="Yuebin Sun&#39;s Blog">
 <meta property="og:locale">
-<meta property="article:author" content="rekken">
+<meta property="article:author" content="Yuebin Sun">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:creator" content="@yuebinsun">
+<meta name="twitter:creator" content="@yuebinsun2020">
   
     <link rel="alternate" href="/atom.xml" title="Yuebin Sun&#39;s Blog" type="application/atom+xml">
   
@@ -102,7 +102,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun">@yuebinsun</a>) of Tencent Security Xuanwu Lab</p>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>) of Tencent Security Xuanwu Lab</p>
 <h2 id="0x0-Summary"><a href="#0x0-Summary" class="headerlink" title="0x0 Summary"></a>0x0 Summary</h2><p>Today, Adobe Acrobat Reader DC for macOS patched three critical vulnerabilities(CVE-2020-9615, CVE-2020-9614, CVE-2020-9613) I reported. The only requirement needed to trigger the vulnerabilities is that Adobe Acrobat Reader DC has been installed. A normal user on macOS(with SIP enabled) can locally exploit this vulnerabilities chain to elevate privilege to the ROOT without a user being aware. In this blog, I will analyze the details of vulnerabilities and show how to exploit them.</p>
 <h2 id="0x1-Background"><a href="#0x1-Background" class="headerlink" title="0x1 Background"></a>0x1 Background</h2><p>The root process has superpowers, it almost can do anything, reading/writing all sensitive files/databases such as Images/Calendars. However in modern macOS, root processes outside of sandbox are rare, most macOS built-in services run within a sandbox. They are no longer the king, they imprison themselves in a cage based on declarative sandbox profile rules. </p>
 <p>Good news, popular software with high privileged services are new good target in addition to macOS built-in services, so Adobe Acrobat Reader DC catch my attention.</p>
@@ -148,7 +148,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab</p>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>) of Tencent Security Xuanwu Lab</p>
 <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>COVID-19 outbreak keep me from going out，I have been researching macOS’s Security framework in the past two weeks of homeworking.</p>
 <p>In this blog, I will try to analyze Security framework, especially Keychain, and previous vulnerabilities of the Secuirty framework。</p>
 <h2 id="Security-Framework"><a href="#Security-Framework" class="headerlink" title="Security Framework"></a>Security Framework</h2><p>Security framework is responsible for providing authentication and authorization, secure data storage and transportation, code signing, encryption/decryption services. Apps can use this services by using API of Security framework directly without knowing or caring about its implementation details.</p>
@@ -197,7 +197,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab</p>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>) of Tencent Security Xuanwu Lab</p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
 <p>本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。</p>
 <h2 id="Security-Framework-简介"><a href="#Security-Framework-简介" class="headerlink" title="Security Framework 简介"></a>Security Framework 简介</h2><p>Security Framework 主要负责为 App 提供认证与授权、安全数据存储与传输（Keychain，App Transport Security）、代码签名、加密解密功能。</p>
@@ -247,7 +247,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-环境信息"><a href="#1-环境信息" class="headerlink" title="1 环境信息"></a>1 环境信息</h2><ul>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>)</p>
+<h2 id="1-环境信息"><a href="#1-环境信息" class="headerlink" title="1 环境信息"></a>1 环境信息</h2><ul>
 <li>Windows 10 X64 14393 (1607) - 没有安装过任何补丁</li>
 <li>Microsoft Edge 38.14393.0.0</li>
 <li>Microsoft EdgeHTML 14.14393</li>
@@ -293,7 +294,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>GeekPwn 2016 比赛中有一道 Windows 服务漏洞提权题目，该服务程序会创建命名管道（Named Pipe）服务端接收客户端发送的文件路径然后调用 LoadLibrary 加载，但加载之前有一系列的检查过程，我们的最终目标是绕过这些检查，加载我们指定的 DLL并以 SYSTEM 权限执行任意代码。本文笔者逐一分析该服务的各个验证环节及其绕过方法，以及如何组合他们最终启动 SYSTEM 权限的计算器。</p>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>)</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>GeekPwn 2016 比赛中有一道 Windows 服务漏洞提权题目，该服务程序会创建命名管道（Named Pipe）服务端接收客户端发送的文件路径然后调用 LoadLibrary 加载，但加载之前有一系列的检查过程，我们的最终目标是绕过这些检查，加载我们指定的 DLL并以 SYSTEM 权限执行任意代码。本文笔者逐一分析该服务的各个验证环节及其绕过方法，以及如何组合他们最终启动 SYSTEM 权限的计算器。</p>
 <p>服务端的处理逻辑: </p>
 <ol>
 <li><p>服务端创建命名管道，等待客户端的连接。</p>
@@ -349,7 +351,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这份文档是对 James Forshaw 2017 年公开的 《Windows Logical EoP Workshop》 逻辑漏洞本地提权 Workshop 的分析调试笔记。</p>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>)</p>
+<p>这份文档是对 James Forshaw 2017 年公开的 《Windows Logical EoP Workshop》 逻辑漏洞本地提权 Workshop 的分析调试笔记。</p>
 <ul>
 <li><p>Workshop PPT: <a target="_blank" rel="noopener" href="https://conference.hitb.org/hitbsecconf2017ams/materials/D2T3%20-%20James%20Forshaw%20-%20Introduction%20to%20Logical%20Privilege%20Escalation%20on%20Windows.pdf">https://conference.hitb.org/hitbsecconf2017ams/materials/D2T3%20-%20James%20Forshaw%20-%20Introduction%20to%20Logical%20Privilege%20Escalation%20on%20Windows.pdf</a></p>
 </li>
@@ -491,7 +494,7 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2020 rekken<br>
+      &copy; 2020 Yuebin Sun<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

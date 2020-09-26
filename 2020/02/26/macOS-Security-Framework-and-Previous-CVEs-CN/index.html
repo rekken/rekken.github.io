@@ -20,12 +20,12 @@ ga('send', 'pageview');
   
   <title>macOS Security Framework and previous CVEs | Yuebin Sun&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security">
+  <meta name="description" content="Yuebin Sun(@yuebinsun2020) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Secur">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macOS Security Framework and previous CVEs">
 <meta property="og:url" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/index.html">
 <meta property="og:site_name" content="Yuebin Sun&#39;s Blog">
-<meta property="og:description" content="Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Security">
+<meta property="og:description" content="Yuebin Sun(@yuebinsun2020) of Tencent Security Xuanwu Lab 摘要新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。 本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。 Secur">
 <meta property="og:locale">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/security-framework.png">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/csda-of-macos.png">
@@ -36,12 +36,12 @@ ga('send', 'pageview');
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/auth_security_agent.png">
 <meta property="og:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/securityd_securityagent.jpg">
 <meta property="article:published_time" content="2020-02-26T08:59:00.000Z">
-<meta property="article:modified_time" content="2020-05-14T09:39:30.250Z">
-<meta property="article:author" content="rekken">
+<meta property="article:modified_time" content="2020-09-26T14:23:55.250Z">
+<meta property="article:author" content="Yuebin Sun">
 <meta property="article:tag" content="macOS">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://rekken.github.io/2020/02/26/macOS-Security-Framework-and-Previous-CVEs-CN/security-framework.png">
-<meta name="twitter:creator" content="@yuebinsun">
+<meta name="twitter:creator" content="@yuebinsun2020">
   
     <link rel="alternate" href="/atom.xml" title="Yuebin Sun&#39;s Blog" type="application/atom+xml">
   
@@ -114,7 +114,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Yuebin Sun(@yuebinsun) of Tencent Security Xuanwu Lab</p>
+        <p>Yuebin Sun(<a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>) of Tencent Security Xuanwu Lab</p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>新冠病毒疫情出不了门，在家办公这两周笔者研究了一下 macOS 的 Security Framework。</p>
 <p>本文主要分析 Security Framework 尤其是其中 Keychain 的架构，将 Security Framework 近一两年的历史漏洞做个整理。</p>
 <h2 id="Security-Framework-简介"><a href="#Security-Framework-简介" class="headerlink" title="Security Framework 简介"></a>Security Framework 简介</h2><p>Security Framework 主要负责为 App 提供认证与授权、安全数据存储与传输（Keychain，App Transport Security）、代码签名、加密解密功能。</p>
@@ -214,7 +214,7 @@ ga('send', 'pageview');
 <p>对证书管理及相关的数据结构暂时还不太熟悉，暂时不进一步分析了</p>
 <p>上面这些是目前我找到的比较确定的一些漏洞及其补丁，因为 Apple 开源代码非常滞后，所以上面这些主要是 10.14.* 版本中涉及 Security Framework 的漏洞的分析。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是我这段时间研究 Security Framework 并做的分享。因为 Security Framework 比较庞大，我只重点介绍了 Keychain 以及历史上被发现漏洞比较多的 Security Server 组件。其他像 Auth 组件来得及分析，等后续对这些组件有了新的研究，我将继续分享。</p>
-<p>如果发现上面的内容有错误，或者您也对 macOS 感兴趣，欢迎联系我 <a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun">@yuebinsun</a>。</p>
+<p>如果发现上面的内容有错误，或者您也对 macOS 感兴趣，欢迎联系我 <a target="_blank" rel="noopener" href="https://twitter.com/yuebinsun2020">@yuebinsun2020</a>。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Documentation of Security Framework</p>
 <p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/security?language=objc">https://developer.apple.com/documentation/security?language=objc</a></p>
 <p>[2] Apple Open Source Code</p>
@@ -332,7 +332,7 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2020 rekken<br>
+      &copy; 2020 Yuebin Sun<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
