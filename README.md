@@ -1,1 +1,1 @@
-这个博客用于分享和记录自己在安全研究方向的工作
+This blog is used to share and record rekken’s work in security research.
